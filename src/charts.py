@@ -30,6 +30,7 @@ def annual_total_chart(df_annual: pd.DataFrame) -> go.Figure:
         legend=dict(orientation="h", y=1.05),
         hovermode="x unified",
     )
+    fig.update_xaxes(type="category")
     return fig
 
 
@@ -145,6 +146,7 @@ def grade_trend_chart(df_trend: pd.DataFrame) -> go.Figure:
         color_discrete_sequence=px.colors.qualitative.Set2,
     )
     fig.update_layout(hovermode="x unified")
+    fig.update_xaxes(type="category")
     return fig
 
 
