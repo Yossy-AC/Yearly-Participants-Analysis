@@ -227,15 +227,14 @@ with tab_main:
             delta_total = cur_total - cmp_total
             delta_pct = (delta_total / cmp_total) * 100
 
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3 = st.columns(3)
     col1.metric(
         f"{year_current}年度 総受講者数",
         f"{cur_total:,} 人",
         delta=f"{delta_total:+,} 人 ({delta_pct:+.1f}%)" if delta_total is not None else None,
     )
-    col2.metric("講座数", f"{cur_courses} 講座")
-    col3.metric("月平均受講者数", f"{cur_avg_month:,} 人")
-    col4.metric("講座平均受講者数", f"{cur_avg_course:,} 人")
+    col2.metric("月平均受講者数", f"{cur_avg_month:,} 人")
+    col3.metric("講座平均受講者数", f"{cur_avg_course:,} 人")
 
     st.markdown("---")
 
