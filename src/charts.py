@@ -169,6 +169,25 @@ def classroom_trend_chart(df_trend: pd.DataFrame) -> go.Figure:
     return fig
 
 
+def classroom_trend_line_chart(df_trend: pd.DataFrame) -> go.Figure:
+    df_trend = df_trend.copy()
+    df_trend["classroom"] = df_trend["classroom"].astype(str)
+    df_trend["year"] = df_trend["year"].astype(int)
+    fig = px.line(
+        df_trend,
+        x="year",
+        y="participants",
+        color="classroom",
+        markers=True,
+        labels={"participants": "受講者数（人）", "year": "年度", "classroom": "教室"},
+        title="教室別受講者数（経年推移）",
+        color_discrete_sequence=px.colors.qualitative.Set2,
+    )
+    fig.update_layout(hovermode="x unified")
+    fig.update_xaxes(type="category")
+    return fig
+
+
 def annual_trend_by_month_chart(df_monthly: pd.DataFrame) -> go.Figure:
     pivot = df_monthly.pivot_table(
         index="month", columns="year", values="participants", aggfunc="sum"
