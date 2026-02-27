@@ -278,9 +278,6 @@ with tab_monthly:
     st.plotly_chart(charts.monthly_seasonality_chart(df_monthly), use_container_width=True, key="monthly_season")
 
     st.markdown("---")
-    st.plotly_chart(charts.annual_trend_by_month_chart(df_monthly), use_container_width=True, key="monthly_overlay")
-
-    st.markdown("---")
     st.subheader("月別データ（表）")
     pivot_monthly = df_monthly.pivot_table(
         index="month", columns="year", values="participants", aggfunc="sum"
