@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 
-from src import analysis, charts
+from src import analysis, charts, ai_analysis
 from src.data_loader import load_excel
 from src.normalizer import apply_aliases, load_aliases
 
@@ -174,7 +174,7 @@ def render_yoy_metrics(pivot_df, max_items=8):
 # ────────────────────────────────────────────
 # タブ構成
 # ────────────────────────────────────────────
-tab_main, tab_annual, tab_monthly, tab_grade, tab_classroom, tab_course, tab_instructor, tab_export = st.tabs([
+tab_main, tab_annual, tab_monthly, tab_grade, tab_classroom, tab_course, tab_instructor, tab_export, tab_ai = st.tabs([
     "📊 メイン",
     "📈 経年推移",
     "🗓️ 年間推移",
@@ -183,6 +183,7 @@ tab_main, tab_annual, tab_monthly, tab_grade, tab_classroom, tab_course, tab_ins
     "📚 講座別",
     "👩‍🏫 担当別",
     "📥 データエクスポート",
+    "🤖 AI分析",
 ])
 
 # ══════════════════════════════════════════
@@ -446,3 +447,27 @@ with tab_export:
         )
     except Exception:
         st.info("月別集計に十分なデータがありません。")
+
+# ══════════════════════════════════════════
+# タブ9: AI分析
+# ══════════════════════════════════════════
+with tab_ai:
+    st.header("AI分析")
+    st.caption("現在のフィルター条件のデータをもとに、Claude がサマリーを生成します。")
+
+    api_key = st.secrets.get("ANTHROPIC_API_KEY", "")
+    if not api_key:
+        st.warning("API キーが設定されていません。`.streamlit/secrets.toml` に `ANTHROPIC_API_KEY` を設定してください。")
+        st.code('[secrets]\nANTHROPIC_API_KEY = "sk-ant-xxxxxxx"', language="toml")
+    else:
+        if st.button("🤖 AI分析を実行", type="primary"):
+            with st.spinner("Claude が分析中です..."):
+                try:
+                    result = ai_analysis.run_analysis(api_key, df)
+                    st.session_state["ai_result"] = result
+                except Exception as e:
+                    st.error(f"API呼び出しに失敗しました: {e}")
+
+        if "ai_result" in st.session_state:
+            st.markdown("---")
+            st.markdown(st.session_state["ai_result"])

@@ -1,0 +1,12 @@
+# Streamlit secrets（APIキーなどを含むため絶対にコミットしない）
+.streamlit/secrets.toml
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+
+# OS
+.DS_Store
+Thumbs.db
