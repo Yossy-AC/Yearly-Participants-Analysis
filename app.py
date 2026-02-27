@@ -155,6 +155,7 @@ def render_yoy_metrics(pivot_df, max_items=8):
     if len(years) < 2:
         return
     cur, prev = years[-1], years[-2]
+    st.caption(f"📊 {cur}年度の上位{max_items}項目（下の数値は{prev}年度との比較）")
     # 最新年度の上位項目を選択
     top = pivot_df.nlargest(max_items, cur)
     cols = st.columns(min(len(top), 4))
