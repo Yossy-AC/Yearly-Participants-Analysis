@@ -458,7 +458,7 @@ with tab_ai:
     api_key = st.secrets.get("ANTHROPIC_API_KEY", "")
     if not api_key:
         st.warning("API キーが設定されていません。`.streamlit/secrets.toml` に `ANTHROPIC_API_KEY` を設定してください。")
-        st.code('[secrets]\nANTHROPIC_API_KEY = "sk-ant-xxxxxxx"', language="toml")
+        st.code('ANTHROPIC_API_KEY = "sk-ant-xxxxxxx"', language="toml")
     else:
         if st.button("🤖 AI分析を実行", type="primary"):
             with st.spinner("Claude が分析中です..."):
