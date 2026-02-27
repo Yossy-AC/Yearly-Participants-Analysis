@@ -316,11 +316,10 @@ with tab_classroom:
 
         st.markdown("---")
         df_cls_trend = analysis.classroom_trend(df)
-        st.plotly_chart(charts.classroom_trend_chart(df_cls_trend), use_container_width=True, key="classroom_chart")
+        st.plotly_chart(charts.classroom_trend_line_chart(df_cls_trend), use_container_width=True, key="classroom_trend_line")
 
         st.markdown("---")
-        st.subheader("教室別受講者数（経年推移）")
-        st.plotly_chart(charts.classroom_trend_line_chart(df_cls_trend), use_container_width=True, key="classroom_trend_line")
+        st.plotly_chart(charts.classroom_trend_chart(df_cls_trend), use_container_width=True, key="classroom_chart")
 
         st.markdown("---")
         st.subheader("教室×年度 前年比増減")
