@@ -213,19 +213,24 @@ with tab_main:
     # KPI計算
     df_cur = df[df["year"] == year_current]
     cur_total = int(df_cur["participants"].sum())
-    cur_courses = df_cur["course_name"].nunique()
     cur_months = df_cur["month"].nunique()
     cur_avg_month = int(cur_total / cur_months) if cur_months > 0 else 0
-    cur_avg_course = int(cur_total / cur_courses) if cur_courses > 0 else 0
+    cur_max_month = int(df_cur["participants"].max()) if len(df_cur) > 0 else 0
 
     delta_total = None
     delta_pct = None
+    delta_max = None
+    delta_max_pct = None
     if year_compare is not None:
         df_cmp = df[df["year"] == year_compare]
         cmp_total = int(df_cmp["participants"].sum())
+        cmp_max_month = int(df_cmp["participants"].max()) if len(df_cmp) > 0 else 0
         if cmp_total > 0:
             delta_total = cur_total - cmp_total
             delta_pct = (delta_total / cmp_total) * 100
+        if cmp_max_month > 0:
+            delta_max = cur_max_month - cmp_max_month
+            delta_max_pct = (delta_max / cmp_max_month) * 100
 
     col1, col2, col3 = st.columns(3)
     col1.metric(
@@ -234,7 +239,11 @@ with tab_main:
         delta=f"{delta_total:+,} 人 ({delta_pct:+.1f}%)" if delta_total is not None else None,
     )
     col2.metric("月平均受講者数", f"{cur_avg_month:,} 人")
-    col3.metric("講座平均受講者数", f"{cur_avg_course:,} 人")
+    col3.metric(
+        "年間MAX受講者数",
+        f"{cur_max_month:,} 人",
+        delta=f"{delta_max:+,} 人 ({delta_max_pct:+.1f}%)" if delta_max is not None else None,
+    )
 
     st.markdown("---")
 
