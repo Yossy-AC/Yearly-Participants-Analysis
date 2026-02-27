@@ -208,6 +208,8 @@ with tab_main:
             key="dash_year_compare"
         ) if compare_options else None
 
+    st.caption(f"📊 下の数値は{year_compare}年度との比較です（該当データがない場合は表示されません）")
+
     # KPI計算
     df_cur = df[df["year"] == year_current]
     cur_total = int(df_cur["participants"].sum())
