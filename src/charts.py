@@ -64,6 +64,8 @@ def classroom_ranking_chart(df_top: pd.DataFrame) -> go.Figure:
 
 
 def course_yoy_chart(df_yoy: pd.DataFrame, course_name: str) -> go.Figure:
+    df_yoy = df_yoy.copy()
+    df_yoy["year"] = df_yoy["year"].astype(str)
     fig = px.bar(
         df_yoy,
         x="month",
@@ -80,6 +82,8 @@ def course_yoy_chart(df_yoy: pd.DataFrame, course_name: str) -> go.Figure:
 
 
 def monthly_seasonality_chart(df_monthly: pd.DataFrame) -> go.Figure:
+    df_monthly = df_monthly.copy()
+    df_monthly["year"] = df_monthly["year"].astype(str)
     fig = px.line(
         df_monthly,
         x="month",
@@ -159,6 +163,7 @@ def classroom_trend_chart(df_trend: pd.DataFrame) -> go.Figure:
         color_discrete_sequence=px.colors.qualitative.Pastel,
     )
     fig.update_layout(hovermode="x unified")
+    fig.update_xaxes(type="category")
     return fig
 
 
