@@ -34,36 +34,6 @@ def annual_total_chart(df_annual: pd.DataFrame) -> go.Figure:
     return fig
 
 
-def course_ranking_chart(df_top: pd.DataFrame) -> go.Figure:
-    fig = px.bar(
-        df_top.sort_values("participants"),
-        x="participants",
-        y="course_name",
-        orientation="h",
-        labels={"participants": "受講者数（人）", "course_name": "講座名"},
-        title="講座別受講者数ランキング",
-        color="participants",
-        color_continuous_scale="Blues",
-    )
-    fig.update_layout(coloraxis_showscale=False, yaxis_title="")
-    return fig
-
-
-def classroom_ranking_chart(df_top: pd.DataFrame) -> go.Figure:
-    fig = px.bar(
-        df_top.sort_values("participants"),
-        x="participants",
-        y="classroom",
-        orientation="h",
-        labels={"participants": "受講者数（人）", "classroom": "教室"},
-        title="教室別受講者数ランキング",
-        color="participants",
-        color_continuous_scale="Greens",
-    )
-    fig.update_layout(coloraxis_showscale=False, yaxis_title="")
-    return fig
-
-
 def course_yoy_chart(df_yoy: pd.DataFrame, course_name: str) -> go.Figure:
     df_yoy = df_yoy.copy()
     df_yoy["year"] = df_yoy["year"].astype(str)
