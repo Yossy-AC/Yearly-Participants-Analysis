@@ -1,6 +1,9 @@
 # Streamlit secrets（APIキーなどを含むため絶対にコミットしない）
 .streamlit/secrets.toml
 
+# 環境変数
+.env
+
 # Python
 __pycache__/
 *.py[cod]
