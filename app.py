@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import streamlit as st
 
@@ -444,10 +445,10 @@ with tab_ai:
     st.header("AI分析")
     st.caption("現在のフィルター条件のデータをもとに、Claude がサマリーを生成します。")
 
-    api_key = st.secrets.get("ANTHROPIC_API_KEY", "")
+    api_key = os.environ.get("ANTHROPIC_API_KEY", "") or st.secrets.get("ANTHROPIC_API_KEY", "")
     if not api_key:
-        st.warning("API キーが設定されていません。`.streamlit/secrets.toml` に `ANTHROPIC_API_KEY` を設定してください。")
-        st.code('ANTHROPIC_API_KEY = "sk-ant-xxxxxxx"', language="toml")
+        st.warning("API キーが設定されていません。`Yossy/.env` に `ANTHROPIC_API_KEY` を設定してください。")
+        st.code('ANTHROPIC_API_KEY=sk-ant-xxxxxxx', language="bash")
     else:
         if st.button("🤖 AI分析を実行", type="primary"):
             with st.spinner("Claude が分析中です..."):
